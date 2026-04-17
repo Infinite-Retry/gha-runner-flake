@@ -43,6 +43,7 @@ let
       gnugrep
       gnused
       findutils
+      fastlane
     ])
     ++ lib.optional isLinux pkgs.stdenv.cc.cc.lib;
 
@@ -82,18 +83,16 @@ in
   };
 
   config = lib.mkIf (cfg != { }) {
-    services.github-runners = lib.mapAttrs (
-      name: runner: {
-        enable = true;
-        inherit name;
-        url = "https://github.com/Infinite-Retry";
-        tokenFile = toString runner.tokenFile;
-        replace = true;
-        extraLabels = labels;
-        extraPackages =
-          extraPackages ++ [ androidComposition.androidsdk ] ++ lib.optional isDarwin darwinSystemTools;
-        extraEnvironment = environment;
-      }
-    ) cfg;
+    services.github-runners = lib.mapAttrs (name: runner: {
+      enable = true;
+      inherit name;
+      url = "https://github.com/Infinite-Retry";
+      tokenFile = toString runner.tokenFile;
+      replace = true;
+      extraLabels = labels;
+      extraPackages =
+        extraPackages ++ [ androidComposition.androidsdk ] ++ lib.optional isDarwin darwinSystemTools;
+      extraEnvironment = environment;
+    }) cfg;
   };
 }
