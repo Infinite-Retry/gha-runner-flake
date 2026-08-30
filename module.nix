@@ -44,6 +44,7 @@ let
       gnused
       findutils
       fastlane
+      ffmpeg
     ])
     ++ lib.optional isLinux pkgs.stdenv.cc.cc.lib;
 
