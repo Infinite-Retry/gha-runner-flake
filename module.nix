@@ -11,11 +11,29 @@ let
   isLinux = pkgs.stdenv.isLinux;
   isDarwin = pkgs.stdenv.isDarwin;
 
-  buildToolsVersion = "36.0.0";
+  buildToolsVersion = "37.0.0";
+
+  emptySysImgXml = pkgs.writeText "sys-img2-3.xml" ''
+    <?xml version="1.0" encoding="utf-8"?>
+    <sys-img:sdk-sys-img xmlns:sys-img="http://schemas.android.com/sdk/android/repo/sys-img2/03"/>
+  '';
+  emptyAddonXml = pkgs.writeText "addon2-3.xml" ''
+    <?xml version="1.0" encoding="utf-8"?>
+    <addon:sdk-addon xmlns:addon="http://schemas.android.com/sdk/android/repo/addon2/03"/>
+  '';
+
   androidComposition = pkgs.androidenv.composeAndroidPackages {
+    repoXmls = {
+      packages = [ ./android-repo/repository2-3.xml ];
+      images = [ emptySysImgXml ];
+      addons = [ emptyAddonXml ];
+    };
     buildToolsVersions = [ buildToolsVersion ];
-    platformVersions = [ "37" ];
-    platformToolsVersion = "37.0.0";
+    platformVersions = [
+      "37.0"
+      "37.2"
+    ];
+    platformToolsVersion = "37.0.1";
     cmakeVersions = [ "3.22.1" ];
     includeNDK = true;
     ndkVersions = [ "28.2.13676358" ];
