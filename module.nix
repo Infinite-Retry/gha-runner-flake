@@ -63,6 +63,7 @@ let
       findutils
       fastlane
       ffmpeg
+      libwebp
     ])
     ++ lib.optional isLinux pkgs.stdenv.cc.cc.lib;
 
