@@ -64,6 +64,7 @@ let
       fastlane
       ffmpeg
       libwebp
+      nodejs_26
     ])
     ++ lib.optional isLinux pkgs.stdenv.cc.cc.lib;
 
